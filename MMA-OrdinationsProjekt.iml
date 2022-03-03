@@ -10,7 +10,7 @@
     <orderEntry type="library" name="JAVAMockito" level="application" />
     <orderEntry type="library" name="Java FX" level="application" />
     <orderEntry type="library" name="sqljdbc4" level="application" />
-    <orderEntry type="library" name="javaFX" level="application" />
-    <orderEntry type="library" name="Mockito" level="application" />
+    <orderEntry type="library" exported="" name="javafx" level="application" />
+    <orderEntry type="library" exported="" name="Mockito" level="application" />
   </component>
 </module>
