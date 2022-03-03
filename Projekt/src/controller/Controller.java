@@ -2,13 +2,10 @@ package controller;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
-import ordination.DagligFast;
-import ordination.DagligSkaev;
-import ordination.Laegemiddel;
-import ordination.PN;
-import ordination.Patient;
+import ordination.*;
 import storage.Storage;
 
 public class Controller {
@@ -39,8 +36,12 @@ public class Controller {
 	 */
 	public PN opretPNOrdination(LocalDate startDen, LocalDate slutDen,
 			Patient patient, Laegemiddel laegemiddel, double antal) {
-		// TODO
-		return null;
+		if(checkStartFoerSlut(startDen,slutDen)){
+			PN pn = new PN(startDen,slutDen,laegemiddel,antal);
+			patient.addOrdination(pn);
+			return pn;
+		} else throw new IllegalArgumentException ("Din startdato er efter din slutdato");
+
 	}
 
 	/**
@@ -53,8 +54,12 @@ public class Controller {
 			LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
 			double morgenAntal, double middagAntal, double aftenAntal,
 			double natAntal) {
-		// TODO
-		return null;
+		if(checkStartFoerSlut(startDen,slutDen) ){
+			DagligFast df = new DagligFast(startDen,slutDen,laegemiddel);
+			df.opretDosis(morgenAntal,middagAntal,aftenAntal,natAntal);
+			patient.addOrdination(df);
+			return df;
+		} else throw new IllegalArgumentException ("Din startdato er efter din slutdato");
 	}
 
 	/**
@@ -68,8 +73,12 @@ public class Controller {
 	public DagligSkaev opretDagligSkaevOrdination(LocalDate startDen,
 			LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
 			LocalTime[] klokkeSlet, double[] antalEnheder) {
-		// TODO
-		return null;
+		if(checkStartFoerSlut(startDen,slutDen)){
+			DagligSkaev ds = new DagligSkaev(startDen,slutDen,laegemiddel);
+			ds.opretDosis(klokkeSlet,antalEnheder);
+			patient.addOrdination(ds);
+			return ds;
+		} else throw new IllegalArgumentException ("Din startdato er efter din slutdato");
 	}
 
 	/**
@@ -79,7 +88,7 @@ public class Controller {
 	 * Pre: ordination og dato er ikke null
 	 */
 	public void ordinationPNAnvendt(PN ordination, LocalDate dato) {
-		// TODO
+		ordination.givDosis(dato);
 	}
 
 	/**
@@ -89,8 +98,13 @@ public class Controller {
 	 * Pre: patient og lægemiddel er ikke null
 	 */
 	public double anbefaletDosisPrDoegn(Patient patient, Laegemiddel laegemiddel) {
-		//TODO
-		return 0;
+		if(patient.getVaegt()<25){
+			return laegemiddel.getEnhedPrKgPrDoegnLet()*patient.getVaegt();
+		} else if (patient.getVaegt()<=120){
+			return laegemiddel.getEnhedPrKgPrDoegnNormal()* patient.getVaegt();
+		}else {
+			return laegemiddel.getEnhedPrKgPrDoegnTung()*patient.getVaegt();
+		}
 	}
 
 	/**
@@ -100,8 +114,18 @@ public class Controller {
 	 */
 	public int antalOrdinationerPrVægtPrLægemiddel(double vægtStart,
 			double vægtSlut, Laegemiddel laegemiddel) {
-		// TODO
-		return 0;
+		int antalOrdinationer = 0;
+		List<Patient> patienter = new ArrayList<>(getAllPatienter());
+		for(Patient p : patienter){
+			if(p.getVaegt()>=vægtStart && p.getVaegt()<=vægtSlut){
+				for(Ordination o : p.getOrdinationer()){
+					if(o.getLaegemiddel().equals(laegemiddel)){
+						antalOrdinationer++;
+					}
+				}
+			}
+		}
+		return antalOrdinationer;
 	}
 
 	public List<Patient> getAllPatienter() {

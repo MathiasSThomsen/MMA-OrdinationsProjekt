@@ -7,8 +7,36 @@ public abstract class Ordination {
     private LocalDate startDen;
     private LocalDate slutDen;
 
-    // TODO Link til Laegemiddel
-    // TODO constructor (med specifikation)
+    // association --> 0..1 Lægemiddel
+    private Laegemiddel laegemiddel; // nullable
+
+    /** Note: Nullable return value. */
+    public Laegemiddel getLaegemiddel() {
+        return laegemiddel;
+    }
+
+    /** Pre: This ordination is not connected to a laegemiddel. */
+    public void setLaegemiddel(Laegemiddel laegemiddel) {
+        this.laegemiddel = laegemiddel;
+    }
+
+    /** Pre: This ordination is connected to a laegemiddel. */
+    public void removeLaegemiddel() {
+        this.laegemiddel = null;
+    }
+
+
+    /**
+     *
+     * @param startDen
+     * @param slutDen
+     * @param laegemiddel
+     */
+    public Ordination(LocalDate startDen, LocalDate slutDen, Laegemiddel laegemiddel) {
+        this.startDen = startDen;
+        this.slutDen = slutDen;
+        this.laegemiddel = laegemiddel;
+    }
 
     public LocalDate getStartDen() {
         return startDen;

@@ -1,11 +1,28 @@
 package ordination;
 
+import java.util.ArrayList;
+
 public class Patient {
     private String cprnr;
     private String navn;
     private double vaegt;
 
-    // TODO: Link til Ordination
+    // association --> 0..* Ordination
+    private final ArrayList<Ordination> ordinationer = new ArrayList<>();
+
+    public ArrayList<Ordination> getOrdinationer() {
+        return new ArrayList<>(ordinationer);
+    }
+
+    /** Pre: The Ordination is not connected to a Patient. */
+    public void addOrdination(Ordination Ordination) {
+        ordinationer.add(Ordination);
+    }
+
+    /** Pre: The Ordination is connected to this Patient. */
+    public void removeOrdination(Ordination Ordination) {
+        ordinationer.remove(Ordination);
+    }
 
     public Patient(String cprnr, String navn, double vaegt) {
         this.cprnr = cprnr;
