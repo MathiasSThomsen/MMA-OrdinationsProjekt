@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DagligFast extends Ordination {
 
@@ -16,6 +17,7 @@ public class DagligFast extends Ordination {
     public DagligFast(LocalDate startDen, LocalDate slutDen, Laegemiddel laegemiddel) {
         super(startDen, slutDen, laegemiddel);
     }
+
 
     public Dosis[] getDoser() {
         return doser;

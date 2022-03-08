@@ -11,7 +11,7 @@ public class PN extends Ordination {
     private double antalEnheder;
     private List<LocalDate> givesdatoer = new ArrayList<>();
     private int antalGangeGivet = 0;
-    private double samletAntal = 0;
+
 
     public PN(LocalDate startDen, LocalDate slutDen, Laegemiddel laegemiddel, double antalEnheder) {
         super(startDen, slutDen, laegemiddel);
@@ -27,7 +27,7 @@ public class PN extends Ordination {
      */
 
     public boolean givDosis(LocalDate givesDen) {
-        if(givesDen.isBefore(getSlutDen()) && givesDen.isAfter(getStartDen())){
+        if((givesDen.isBefore(getSlutDen()) || givesDen.isEqual(getSlutDen())) && (givesDen.isAfter(getStartDen()) || givesDen.isEqual(getStartDen()))){
             givesdatoer.add(givesDen);
             antalGangeGivet++;
             return true;
@@ -37,7 +37,9 @@ public class PN extends Ordination {
 
     public double doegnDosis() {
         Collections.sort(givesdatoer);
-        return samletDosis()/antalDage();
+        LocalDate ordineringStart = givesdatoer.get(0);
+        LocalDate ordineringsSlut = givesdatoer.get(givesdatoer.size()-1);
+        return samletDosis()/(ChronoUnit.DAYS.between(ordineringStart,ordineringsSlut)+1);
     }
 
     @Override
@@ -47,7 +49,8 @@ public class PN extends Ordination {
 
 
     public double samletDosis() {
-        samletAntal+=antalEnheder;
+        double samletAntal=0 ;
+        samletAntal=antalGangeGivet* antalEnheder;
         return samletAntal;
     }
 
@@ -61,6 +64,10 @@ public class PN extends Ordination {
 
     public double getAntalEnheder() {
         return antalEnheder;
+    }
+
+    public ArrayList getGivesDatoer() {
+        return new ArrayList<>(givesdatoer);
     }
 
 }

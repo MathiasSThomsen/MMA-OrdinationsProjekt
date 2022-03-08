@@ -88,7 +88,11 @@ public class Controller {
 	 * Pre: ordination og dato er ikke null
 	 */
 	public void ordinationPNAnvendt(PN ordination, LocalDate dato) {
-		ordination.givDosis(dato);
+		if (dato.isAfter(ordination.getStartDen()) && dato.isBefore(ordination.getSlutDen())) {
+			ordination.givDosis(dato);
+		} else {
+			throw new IllegalArgumentException("Datoen er uden for ordinationsperioden");
+		}
 	}
 
 	/**
@@ -116,16 +120,20 @@ public class Controller {
 			double vægtSlut, Laegemiddel laegemiddel) {
 		int antalOrdinationer = 0;
 		List<Patient> patienter = new ArrayList<>(getAllPatienter());
-		for(Patient p : patienter){
-			if(p.getVaegt()>=vægtStart && p.getVaegt()<=vægtSlut){
-				for(Ordination o : p.getOrdinationer()){
-					if(o.getLaegemiddel().equals(laegemiddel)){
-						antalOrdinationer++;
+		//if (vægtStart < vægtSlut) {
+			for (Patient p : patienter) {
+				if (p.getVaegt() >= vægtStart && p.getVaegt() <= vægtSlut) {
+					for (Ordination o : p.getOrdinationer()) {
+						if (o.getLaegemiddel().equals(laegemiddel)) {
+							antalOrdinationer++;
+						}
 					}
 				}
 			}
-		}
-		return antalOrdinationer;
+			return antalOrdinationer;
+	/**	}
+		else throw new IllegalArgumentException ("Startvægt skal være mindre end slutvægt");
+	 **/
 	}
 
 	public List<Patient> getAllPatienter() {
