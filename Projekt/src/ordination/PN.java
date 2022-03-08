@@ -37,7 +37,7 @@ public class PN extends Ordination {
 
     public double doegnDosis() {
         Collections.sort(givesdatoer);
-        return antalGangeGivet*antalEnheder/antalDage();
+        return samletDosis()/antalDage();
     }
 
     @Override
