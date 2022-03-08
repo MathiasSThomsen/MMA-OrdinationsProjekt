@@ -36,6 +36,8 @@ public class PN extends Ordination {
     }
 
     public double doegnDosis() {
+        if (givesdatoer.size() == 0)
+            return 0;
         Collections.sort(givesdatoer);
         LocalDate ordineringStart = givesdatoer.get(0);
         LocalDate ordineringsSlut = givesdatoer.get(givesdatoer.size()-1);

@@ -73,6 +73,13 @@ public class Controller {
 	public DagligSkaev opretDagligSkaevOrdination(LocalDate startDen,
 			LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
 			LocalTime[] klokkeSlet, double[] antalEnheder) {
+		double antalDoser = 0;
+		for (int i = 0; i < antalEnheder.length; i++) {
+			antalDoser += antalEnheder[i];
+		}
+		if (antalDoser >=anbefaletDosisPrDoegn(patient,laegemiddel)) {
+			throw new IllegalArgumentException("Dosen overstiger den anbefalede daglige");
+		}
 		if(checkStartFoerSlut(startDen,slutDen)){
 			DagligSkaev ds = new DagligSkaev(startDen,slutDen,laegemiddel);
 			ds.opretDosis(klokkeSlet,antalEnheder);
@@ -210,7 +217,7 @@ public class Controller {
 
 		LocalTime[] kl = { LocalTime.of(12, 0), LocalTime.of(12, 40),
 				LocalTime.of(16, 0), LocalTime.of(18, 45) };
-		double[] an = { 0.5, 1, 2.5, 3 };
+		double[] an = { 0.5, 0.1, 0.1, 0.1 };
 
 		this.opretDagligSkaevOrdination(LocalDate.of(2021, 1, 23),
 				LocalDate.of(2021, 1, 24), storage.getAllPatienter().get(1),
