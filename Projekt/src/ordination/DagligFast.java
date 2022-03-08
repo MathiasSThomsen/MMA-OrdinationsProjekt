@@ -47,16 +47,16 @@ public class DagligFast extends Ordination {
     }
 
     public void opretDosis(double antalMorgen, double antalMiddag, double antalAften, double antalNat){
-       LocalTime morgen =  LocalTime.of(6,00);
+       LocalTime morgen =  LocalTime.of(6,0);
         Dosis dosermorgen = new Dosis(morgen,antalMorgen);
        doser[0] = dosermorgen;
-        LocalTime middag =  LocalTime.of(12,00);
+        LocalTime middag =  LocalTime.of(12,0);
         Dosis dosermiddag = new Dosis(middag,antalMiddag);
         doser[1] = dosermiddag;
-        LocalTime aften =  LocalTime.of(18,00);
+        LocalTime aften =  LocalTime.of(18,0);
         Dosis doseraften = new Dosis(aften,antalAften);
         doser[2] = doseraften;
-        LocalTime nat =  LocalTime.of(00,00);
+        LocalTime nat =  LocalTime.of(0, 0);
         Dosis dosernat = new Dosis(nat,antalNat);
         doser[3] = dosernat;
     }
