@@ -91,6 +91,7 @@ public class Controller {
 		if (checkStartFoerSlut(dato,ordination.getSlutDen()) && checkStartFoerSlut(ordination.getStartDen(),dato)) {
 			ordination.givDosis(dato);
 		} else throw new IllegalArgumentException ("Din dato er ikke indenfor ordinationen");
+
 	}
 
 	/**
@@ -118,16 +119,20 @@ public class Controller {
 			double vægtSlut, Laegemiddel laegemiddel) {
 		int antalOrdinationer = 0;
 		List<Patient> patienter = new ArrayList<>(getAllPatienter());
-		for(Patient p : patienter){
-			if(p.getVaegt()>=vægtStart && p.getVaegt()<=vægtSlut){
-				for(Ordination o : p.getOrdinationer()){
-					if(o.getLaegemiddel().equals(laegemiddel)){
-						antalOrdinationer++;
+		//if (vægtStart < vægtSlut) {
+			for (Patient p : patienter) {
+				if (p.getVaegt() >= vægtStart && p.getVaegt() <= vægtSlut) {
+					for (Ordination o : p.getOrdinationer()) {
+						if (o.getLaegemiddel().equals(laegemiddel)) {
+							antalOrdinationer++;
+						}
 					}
 				}
 			}
-		}
-		return antalOrdinationer;
+			return antalOrdinationer;
+	/**	}
+		else throw new IllegalArgumentException ("Startvægt skal være mindre end slutvægt");
+	 **/
 	}
 
 	public List<Patient> getAllPatienter() {

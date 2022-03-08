@@ -15,6 +15,17 @@ import java.time.LocalTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerTest {
+    private Patient patient;
+    private Laegemiddel laegemiddel;
+    private LocalDate startDato;
+    private Controller controller = Controller.getController();
+
+    @BeforeEach
+        public void setupBeforeEach() {
+        this.patient = new Patient("280264-0963", "Hans Jensen", 69);
+        this.laegemiddel = new Laegemiddel("Paracetamol", 1, 1.5, 2, "Ml");
+        this.startDato = LocalDate.of(2022,3,4);
+    }
 
     private Patient patient;
     private Laegemiddel laegemiddel;
@@ -80,6 +91,7 @@ class ControllerTest {
         //Assert
         assertEquals(1, this.patient.getOrdinationer().size());
     }
+
 
     @org.junit.jupiter.api.Test
     void opretDagligSkaevOrdination_Slutdato_Efter_Startdato() {

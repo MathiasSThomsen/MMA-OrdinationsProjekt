@@ -50,6 +50,7 @@ public class Patient {
         this.vaegt = vaegt;
     }
 
+
     @Override
     public String toString(){
         return navn + "  " + cprnr;
