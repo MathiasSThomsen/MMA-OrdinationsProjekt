@@ -17,18 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ControllerTest {
     private Patient patient;
     private Laegemiddel laegemiddel;
-    private LocalDate startDato;
-    private Controller controller = Controller.getController();
-
-    @BeforeEach
-        public void setupBeforeEach() {
-        this.patient = new Patient("280264-0963", "Hans Jensen", 69);
-        this.laegemiddel = new Laegemiddel("Paracetamol", 1, 1.5, 2, "Ml");
-        this.startDato = LocalDate.of(2022,3,4);
-    }
-
-    private Patient patient;
-    private Laegemiddel laegemiddel;
     private LocalDate startdato;
     private Controller controller = Controller.getController();
 
