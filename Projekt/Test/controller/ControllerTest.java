@@ -1,6 +1,7 @@
 package controller;
 
 import ordination.Laegemiddel;
+
 import ordination.Ordination;
 import ordination.PN;
 import ordination.Patient;
@@ -10,6 +11,7 @@ import storage.Storage;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerTest {
@@ -18,7 +20,7 @@ class ControllerTest {
     private Laegemiddel laegemiddel;
     private LocalDate startdato;
     private Controller controller = Controller.getController();
-    private Storage storage;
+
 
 
     @BeforeEach
@@ -327,6 +329,7 @@ class ControllerTest {
     }
 
     @org.junit.jupiter.api.Test
+
     void antalOrdinationerPrVægtPrLægemiddel_0_Til_300() {
         //Arrange
         LocalDate slutdato1 = LocalDate.of(2022,03,14);
@@ -349,6 +352,7 @@ class ControllerTest {
 
         //Assert
         assertEquals(6,actualResult);
+
     }
 
     @org.junit.jupiter.api.Test
